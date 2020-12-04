@@ -229,6 +229,13 @@ def _input():
                 os.system("start cmd /c py main.py")
                 os._exit(0)
 
+@bot.command()
+@commands.is_owner()
+async def restart(ctx):
+        await ctx.message.delete()
+        await ctx.author.send("Restarting...")
+        sleep(0.5)
+        os._exit(0)
 
 try:
   thread = threading.Thread(target=_input)
