@@ -219,12 +219,12 @@ async def on_member_join(member):
  else:
    await member.ban(reason="1337 wizzed this")
 
-@bot.event
-async def on_command_error(ctx, error):
-  if isinstance(error, commands.CommandNotFound):
-    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
-  else:
-    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
+#@bot.event
+#async def on_command_error(ctx, error):
+#  if isinstance(error, commands.CommandNotFound):
+#    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
+#  else:
+#    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
 
 def _input():
         sleep(7)
