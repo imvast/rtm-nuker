@@ -2,5 +2,6 @@
   "BOT_TOKEN": "Nzg0NTM0OTI2MjI5MTEwODM1.X8qtFg.LdSdtSfxadWe33FzKVUxVQRq2Ck",
   "BOT_PREFIX": "!",
   "NUKE_ON_JOIN": "False",
-  "NUKE_WAIT_TIME": "0"
+  "NUKE_WAIT_TIME": "0",
+  "CHANNEL_NAMES": ["🤫", "1337", "beamed"]
 }
