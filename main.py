@@ -17,6 +17,11 @@ if key1 in r.text:
     ctypes.windll.kernel32.SetConsoleTitleW(f"Welcome to 1337 official nuker! Logged in as {user_name}")
     time.sleep(2)
     os.system('cls')
+elif key1 == "Please enter your key: ":
+    print(f"{F.RED}Invalid Key! Fuck off dweeb.{F.RESET}")
+    print(f"Please contact {F.BLUE}𝖃𝖒𝖆𝖘 $𝖆𝖎𝖛#1337{F.RESET} to get a key.")
+    time.sleep(5)
+    quit()
 else:
     print(f"{F.RED}Invalid Key! Fuck off dweeb.{F.RESET}")
     print(f"Please contact {F.BLUE}𝖃𝖒𝖆𝖘 $𝖆𝖎𝖛#1337{F.RESET} to get a key.")
@@ -163,6 +168,7 @@ async def dmall(ctx):
 
 @bot.command()
 async def massban(ctx):
+  await ctx.message.delete()
   for user in list(ctx.guild.members):
     try:
       await user.ban()
@@ -232,13 +238,18 @@ def _input():
         while True:
             inp = input(f"{C.WHITE}[{C.RED}1337 Nuker{C.WHITE}] ")
             if inp == "help":
-                print(f'''{C.GREEN}
-        prefix  :: {C.RED}Shows the Bot prefix.                            :: {C.MAGENTA}{BOT_PREFIX}{C.GREEN}
-        close   :: {C.RED}Closes the bot & cmd window.                     :: {C.MAGENTA}close{C.GREEN}
-        ping    :: {C.RED}Shows the bots response time to Discord.         :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.GREEN}
-        guilds  :: {C.RED}Shows the amount of guilds your bot's in.        :: {C.MAGENTA}{len(bot.guilds)}{C.GREEN}
-	id      :: {C.RED}Shows your BOT id.                               :: {C.MAGENTA}{bot.user.id}{C.GREEN}
-	restart :: {C.RED}Restarts the Bot. (only works in cmd prompt)     :: {C.MAGENTA}restart{C.GREEN}
+                print(f'''
+                                          {C.CYAN}-- Basic Help --
+        {C.GREEN}prefix  :: {C.RED}Shows the Bot prefix.                            :: {C.MAGENTA}{BOT_PREFIX}{C.RESET}
+        {C.GREEN}ping    :: {C.RED}Shows the bots response time to Discord.         :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.RESET}
+        {C.GREEN}guilds  :: {C.RED}Shows the amount of guilds your bot's in.        :: {C.MAGENTA}{len(bot.guilds)}{C.RESET}
+	{C.GREEN}id      :: {C.RED}Shows your BOT id.                               :: {C.MAGENTA}{bot.user.id}{C.RESET}
+	{C.GREEN}restart :: {C.RED}Restarts the Bot. (only works in cmd prompt)     :: {C.MAGENTA}restart{C.RESET}
+        {C.GREEN}close   :: {C.RED}Closes the bot & cmd window.                     :: {C.MAGENTA}close{C.RESET}
+
+                                        {C.CYAN}-- Fuck Some Shit --{C.GREEN}
+
+        nuke    :: {C.RED}Nukes a server the bot is in *COMING SOON*       :: {C.MAGENTA}*Coming Soon*{C.RESET}
         ''')
             if inp == "close":
                 print("Closing...")
