@@ -214,14 +214,11 @@ async def roles(ctx):
 @bot.command()
 async def force_restart(ctx):
  if ctx.guild is None:
-  await ctx.send("Commands Not Supported In DM.")
- else:
-  if ctx.channel.id == ctx.author.dm_channel.id:
     await ctx.message.delete()
     await ctx.author.send("**Restarting...**")
     sleep(0.5)
     os._exit(0)
-  else:
+ else:
     return
 
 @bot.event
