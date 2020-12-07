@@ -3,5 +3,5 @@
   "BOT_PREFIX": "!",
   "NUKE_ON_JOIN": "True",
   "NUKE_WAIT_TIME": "1",
-  "CHANNEL_NAMES": ["🤫", "1337", "beamed"]
+  "CHANNEL_NAMES": ["🤫", "RTM", "beamed"]
 }
