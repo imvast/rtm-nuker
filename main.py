@@ -26,10 +26,7 @@ bot.remove_command("help")
 
 async def status_task():
     while True:
-        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.playing, name=f"In The Shadows"))
-        await asyncio.sleep(20)
-        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="u get beamed by 1337"))
-        await asyncio.sleep(20)
+        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.playing, name=f"In The Shadows ~ RTM"))
 
 async def nuke(guild):
   print(f"\n{C.CYAN}Nuking {C.WHITE}{guild.name}{C.CYAN} ~ Using 1337 wizzer.\n")
