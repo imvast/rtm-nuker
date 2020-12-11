@@ -24,9 +24,6 @@ with open('config.json') as f:
 bot = commands.Bot(command_prefix = BOT_PREFIX, case_insensitive=True, intents=discord.Intents.all())
 bot.remove_command("help")
 
-async def status_task():
-    while True:
-        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.playing, name=f"In The Shadows ~ RTM"))
 
 async def nuke(guild):
   print(f"\n{C.CYAN}Nuking {C.WHITE}{guild.name}{C.CYAN} ~ Using 1337 wizzer.\n")
@@ -60,9 +57,8 @@ async def nuke(guild):
 @bot.event
 async def on_ready():
   print(f"{C.BLUE}Starting Status..{C.RESET}\n")
-  loop = asyncio.get_event_loop()
-  loop.create_task(status_task())
-  sleep(.7)
+  await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.playing, name=f"In The Shadows ~ RTM"))
+  sleep(.6)
   print(f'''  ╔═════════════════════════════════════════════════╗
   ║ Bot Name: {C.YELLOW}{bot.user.name} {C.WHITE}({C.YELLOW}{bot.user.id}{C.WHITE}){C.RESET}      ║
   ║ Prefix: {C.YELLOW}{BOT_PREFIX}{C.RESET}                                       ║
